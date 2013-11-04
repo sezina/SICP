@@ -4,3 +4,7 @@
   (cond ((and (< x y) (< x z)) (+ y z))
         ((and (< y x) (< y z)) (+ x z))
         (else (+ x y))))
+
+; or
+(define (sum_of_max_two2 x y z)
+  (+ (max x y) (max y z)))

@@ -1,0 +1,15 @@
+(load "cube.scm")
+
+(define (simpson f a b n)
+  (define h (/ (- b a) n))
+  (define (iter k)
+    (if (> k n)
+      0
+      (+ (* (next-factor k) (f (+ a (* k h))))
+         (iter (+ k 1)))))
+  (define (next-factor c)
+    (cond ((= c 0) 1)
+          ((= c n) 1)
+          ((= (remainder c 2) 0) 2)
+          (else 4)))
+  (/ (* h (iter 0)) 3))

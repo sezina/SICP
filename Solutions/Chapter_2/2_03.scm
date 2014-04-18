@@ -1,6 +1,10 @@
 (load "2_02.scm")
 
 ; make-rec using 4 points
+; a .        . b
+;
+;
+; d .        . c
 (define (make-rec a b c d)
   (cons (make-segment a b)
         (make-segment c d)))
@@ -43,6 +47,10 @@
 
 
 ; make-rec using two edge
+; a ___________ b
+;
+;
+; d ___________ c
 (define (make-rec2 u-e l-e)
   (cons u-e l-e))
 

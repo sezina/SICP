@@ -22,3 +22,33 @@
 (display "is par1-result equal par2-result? ")
 (display (interval-equal? par1-result par2-result))
 (newline)
+(newline)
+
+; compute A/A and B/A
+(display "define A and B using make-interval")
+(newline)
+
+(define A (make-interval 4.005  5.005))
+(display "A = ")
+(print-interval A)
+(define B (make-interval 9.99 10.01))
+(display "B = ")
+(print-interval B)
+(display "A/A = ")
+(print-interval (div-interval A A))
+(display "A/B = ")
+(print-interval (div-interval A B))
+
+(display "define A and B using make-center-percent")
+(newline)
+
+(define A (make-center-percent 5 0.1))
+(define B (make-center-percent 10 0.1))
+(display "A = ")
+(print-interval A)
+(display "B = ")
+(print-interval B)
+(display "A/A = ")
+(print-interval (div-interval A A))
+(display "A/B = ")
+(print-interval (div-interval A B))

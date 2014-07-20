@@ -11,72 +11,51 @@
   (car mobile))
 
 (define (right-branch mobile)
-  (let ((right (cdr mobile)))
-    (if (= (length right) (count-leaves right))
-      right
-      (car right))))
+  (car (cdr mobile)))
 
 (define (branch-length branch)
   (car branch))
 
 (define (branch-structure branch)
-  (let ((structure (cdr branch)))
-    (if (= (length structure) (count-leaves structure))
-      (if (pair? structure)
-        (car structure)
-        structure)
-      (car structure))))
+  (car (cdr branch)))
 
 ; Part b
+(define (branch-weight branch)
+  (newline)
+  (display branch)
+  (if (mobile? (branch-structure branch))
+    (total-weight (branch-structure branch))
+    (branch-structure branch)))
+
+(define (mobile? structure)
+  (list? structure))
+
 (define (total-weight mobile)
-  (cond ((not (list? mobile)) 0)
-        ((and (= (length mobile) 2)
-              (= (length mobile) (count-leaves mobile)))
-         (branch-structure mobile))
-        (else (+ (total-weight (left-branch mobile))
-                 (total-weight (right-branch mobile))))))
+  (+ (branch-weight (left-branch mobile))
+     (branch-weight (right-branch mobile))))
 
 
 ; Part c
+(define (torque branch)
+  (* (branch-length branch)
+     (branch-weight branch)))
 
+(define (branch-balance? left right)
+  (= (torque left)
+     (torque right)))
 
+(define (mobile-balance? mobile)
+  (let ((left (left-branch mobile))
+        (right (right-branch mobile)))
+    (let ((left-struct (branch-structure left))
+          (right-struct (branch-structure right)))
+      (and (branc-balance? left right)
+           (if (mobile? left-struct)
+             (mobile-balance? left-struct)
+             #t)
+           (if (mobile? right-struct)
+             (mobile-balance? right-struct)
+             #t)))))
 
-(newline)
-(display "test cases: ")
-
-(define b1 (make-branch 1 1))
-(newline)
-(display b1)
-(define b2 (make-branch 2 2))
-(newline)
-(display b2)
-(define b3 (make-branch 3 3))
-(newline)
-(display b3)
-(define b4 (make-branch 4 b3))
-(newline)
-(display b4)
-(newline)
-(display "branch length: ")
-(display (branch-length b4))
-(newline)
-(display "branch structure: ")
-(display (branch-structure b4))
-
-
-(define m1 (make-mobile b1 b2))
-(newline)
-(display m1)
-(define m2 (make-mobile b2 b4))
-(newline)
-(display m2)
-(newline)
-(display "left branch: ")
-(display (left-branch m2))
-(newline)
-(display "right branch: ")
-(display (right-branch m2))
-
-(newline)
-(display "total-weight of m2: ")
-(display (total-weight m2))
+; Part d
+; change the accessors of mobile and branch

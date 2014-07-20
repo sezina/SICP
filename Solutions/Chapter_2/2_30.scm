@@ -1,0 +1,23 @@
+(define (square x) (* x x))
+(define t1 (list 1 (list 2 (list 3 4) 5) (list 6 7)))
+
+(define (square-tree tree)
+  (if (null? tree)
+    '()
+    (if (not (pair? tree))
+      (square tree)
+      (cons (square-tree (car tree))
+            (square-tree (cdr tree))))))
+
+(define (square-tree-recur tree)
+  (map (lambda (sub-tree)
+         (if (pair? sub-tree)
+           (square-tree-recur sub-tree)
+           (square sub-tree)))
+       tree))
+
+(display "(square-tree tree): ")
+(display (square-tree t1))
+(newline)
+(display "(square-tree-recur tree): ")
+(display (square-tree-recur t1))

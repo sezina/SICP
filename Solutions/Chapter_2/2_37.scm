@@ -5,17 +5,21 @@
   (accumulate + 0 (map * v w)))
 
 (define (matrix-*-vector m v)
-  (map <??> m))
+  (map (lambda (row)
+         (dot-product row v)) m))
 
 (define (matrix-*-matrix m n)
   (let ((cols (transpose n)))
-    (map <??> m)))
+    (map (lambda (row)
+           (matrix-*-vector cols row)) m)))
 
 (define (transpose mat)
-  (accumulate-n <??> <??> mat))
+  (accumulate-n cons nil mat))
 
 
 ; test
+(display "###test 2_37.scm")
+(newline)
 (define m1 (list (list 1 2 3 4) (list 4 5 6 6) (list 6 7 8 9)))
 (display "matrix 1: ")
 (display m1)
@@ -29,3 +33,12 @@
 (display v1)
 (newline)
 
+(display "transpose m1: ")
+(display (transpose m1))
+(newline)
+(display "(matrix-*-vector m1 v1) => ")
+(display (matrix-*-vector m1 v1))
+(newline)
+(display "(matrix-*-matrix m1 n1) => ")
+(display (matrix-*-matrix m1 n1))
+(newline)
